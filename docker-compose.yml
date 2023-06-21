@@ -15,10 +15,38 @@ services:
     volumes:
       # Monta o diretório atual, com todos os dados do projeto
       - ./:/app
+    depends_on:
+      # Precisa do banco funcionando antes de subir o node
+      - db
     ports:
       # Expõe a porta padrão da aplicação: altere aqui caso use outra porta
       - 3000:3000
+    networks:
+      - crystal_api_net
 
+  # Serviço que irá rodar o banco de dados
+  db:
+    container_name: crystal_api_db
+    image: mysql:8.0.23
+    # Indica de forma fixa a plataforma na qual o banco irá rodar
+    platform: linux/x86_64
+    restart: always
+    ports:
+      # Garanta que não haverá conflitos de porta com um banco que esteja
+      # rodando localmente
+      - 3007:3306
+      # - 33060:33060
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+    networks:
+      - crystal_api_net
+
+# Lista de redes que os containeres irão utilizar
+networks:
+  # Cria rede com nome `blogs_api_net`
+  crystal_api_net:
+    # Define o `driver` como `bridge`, que é o driver padrão do docker
+    driver: bridge
 
 # As chaves `tty`, `stdin_open` e `command` fazem com que o container fique
 # rodando em segundo plano, bem como tornam possível o uso do comando

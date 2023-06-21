@@ -2,7 +2,7 @@ name: crystal-api
 version: 0.1.0
 
 authors:
-  - your-name-here <your-email-here>
+  - Tomaz Dimas <tomazdimas2001@gmail.com>
 
 targets:
   crystal-api:
@@ -10,4 +10,14 @@ targets:
 
 crystal: 1.8.2
 
-license: MIT
+license: UNLICENSED
+
+dependencies:
+  kemal:
+    github: kemalcr/kemal
+  jennifer:
+    github: imdrasil/jennifer.cr
+    version: "= 0.12.0"
+  mysql:
+    github: crystal-lang/crystal-mysql
+    # version: "= 0.14.0"
